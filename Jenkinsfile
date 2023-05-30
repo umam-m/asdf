@@ -2,6 +2,25 @@ pipeline {
     agent any
     
     stages {
+        stage('Build') {
+            steps {
+                // Clean and build Xcode project
+                sh "xcodebuild clean build -scheme RELEASE -workspace asdf.xcodeproj -sdk iphoneos"
+            }
+        }
+        stage('Archive') {
+            steps {
+                // Archive the Xcode project
+                sh "xcodebuild archive -scheme RELEASE -workspace <YOUR_WORKSPACE>.xcworkspace -archivePath build/asdf.xcarchive"
+            }
+        }
+        
+        stage('Export IPA') {
+            steps {
+                // Export the IPA file
+                sh "xcodebuild -exportArchive -archivePath build/asdf.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist"
+            }
+        }
       stage('Build') {
             steps {
                 echo 'Building..'
