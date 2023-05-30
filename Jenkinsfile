@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     stages {
-        stage('Build') {
+        stage('Build1') {
             steps {
                 // Clean and build Xcode project
                 sh "xcodebuild clean build -scheme RELEASE -workspace asdf.xcodeproj -sdk iphoneos"
